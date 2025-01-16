@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import Header from './components/Header/Header';
+import { Container } from '@mui/material';
+import HomeView from './components/views/HomeView/HomeView';
+import DashboardView from './components/views/DashboardView/DashboardView';
+import ItemFormView from './components/views/ItemFormView/ItemFormView';
+import { AppContainer, ViewContainer } from './App.css';
+import { demoItems } from './demoData';
 
-function App() {
-  const [count, setCount] = useState(0)
+const CATEGORIES = [
+    "Food & Drink",
+    "Groceries",
+    "Shopping",
+    "Transport",
+    "General"
+];
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const DEFAULT_VIEW = 'home';
 
-export default App
+const App = () => {
+    const [currentView, setCurrentView] = useState(DEFAULT_VIEW);
+    const [items, setItems] = useState(demoItems);
+
+    const addItem = (newItem) => {
+        console.log("add item")
+        // setItems((prevItems) => [...prevItems, newItem]);
+    };
+
+    const VIEW_COMPONENTS = {
+        home: {
+            label: 'Home',
+            component: HomeView,
+            props: {},
+        },
+        itemForm: {
+            label: 'Add New Item',
+            component: ItemFormView,
+            props: { categories: CATEGORIES, addItem: addItem },
+        },
+        dashboard: {
+            label: 'Dashboard',
+            component: DashboardView,
+            props: { items: items },
+        },
+    };
+
+    const CurrentViewComponent = VIEW_COMPONENTS[currentView]?.component || HomeView;
+    const currentViewProps = VIEW_COMPONENTS[currentView]?.props || {};
+
+    return (
+        <AppContainer>
+            <Header 
+                views={VIEW_COMPONENTS}
+                currentView={currentView}
+                onViewChange={setCurrentView}
+            />
+            <Container style={{ marginTop: '20px' }}>
+                <ViewContainer>
+                    <CurrentViewComponent {...currentViewProps} />
+                </ViewContainer>
+            </Container>
+        </AppContainer>
+    );
+};
+
+export default App;
