@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface DashboardViewProps {
-    items: any[];
-}
-
-const DashboardView: React.FC<DashboardViewProps> = ({ items }) => {
+const DashboardView = ({ items }) => {
     return (
         <div>
             <h2>Dashboard</h2>
