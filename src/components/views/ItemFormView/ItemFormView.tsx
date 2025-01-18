@@ -8,7 +8,7 @@ import './ItemFormView.css.js';
 
 
 
-const ItemFormView = ({ categories, addItem }) => {
+const ItemFormView = ({ item, categories, saveItem }) => {
 
     return (
         <div>
@@ -26,7 +26,7 @@ const ItemFormView = ({ categories, addItem }) => {
             </Dropdown>
             </div>
             <div> description: <input type='text'/> </div>
-            <Button variant="contained" color="primary" onClick={addItem}>
+            <Button variant="contained" color="primary" onClick={saveItem}>
                 Add Item
             </Button>
         </div>
