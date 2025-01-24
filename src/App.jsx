@@ -20,16 +20,9 @@ const DEFAULT_VIEW = 'home';
 const App = () => {
     const [currentView, setCurrentView] = useState(DEFAULT_VIEW);
     const [items, setItems] = useState(demoItems);
-    const [currItem, setCurrItem] = useState({
-        cost: 0,
-        name: "",
-        category: "Food & Drink",
-        description: "",
-        time: ""
-    });
 
-    const saveItem = (item, isItemNew = true) => {
-        console.log("add item")
+    const saveItem = (newItem) => {
+        console.log("add item", newItem)
         // setItems((prevItems) => [...prevItems, newItem]);
     };
 
@@ -42,7 +35,7 @@ const App = () => {
         itemForm: {
             label: 'Add New Item',
             component: ItemFormView,
-            props: { item: currItem, categories: CATEGORIES, saveItem: saveItem },
+            props: { categories: CATEGORIES, saveItem: saveItem },
         },
         dashboard: {
             label: 'Dashboard',
@@ -69,5 +62,6 @@ const App = () => {
         </AppContainer>
     );
 };
+
 
 export default App;
