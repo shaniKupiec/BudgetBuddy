@@ -1,7 +1,7 @@
 import React from 'react';
 import './HomeView.css'; // Import the CSS file
 
-// This component represents the Home page of Budget Buddy
+//Budget Buddy home page
 const HomeView = () => {
     return (
         <div className="home-container">   

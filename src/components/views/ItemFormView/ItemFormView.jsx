@@ -63,6 +63,11 @@ const ItemFormView = ({ categories = [], saveItem = () => {}, setModalMsg = () =
                         value={itemCost}
                         onChange={(e) => {
                             const value = e.target.value;
+                            // Allow empty input to enable delete
+                            if (value === '') {
+                                setItemCost('');
+                                return;
+                            }
                             // Allow only non-negative numbers
                             if (!isNaN(value) && parseFloat(value) >= 0) {
                                 setItemCost(value);
@@ -114,12 +119,6 @@ const ItemFormView = ({ categories = [], saveItem = () => {}, setModalMsg = () =
                         </option>
                     ))}
                 </select>
-                {/* Show selected category */}
-                {selectedCategory && (
-                    <div className="selected-categories">
-                        Selected Category: {selectedCategory}
-                    </div>
-                )}
             </div>
             {/* Submit button */}
             <Button
