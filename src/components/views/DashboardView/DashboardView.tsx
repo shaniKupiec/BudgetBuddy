@@ -1,4 +1,5 @@
 import React from 'react';
+import './DashboardView.css'
 
 const DashboardView = ({ items }) => {
     return (
