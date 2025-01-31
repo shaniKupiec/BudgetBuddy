@@ -11,86 +11,87 @@ import {
 import HomeView from "./components/views/HomeView/HomeView";
 import DashboardView from "./components/views/DashboardView/DashboardView";
 import ItemFormView from "./components/views/ItemFormView/ItemFormView";
-import { AppContainer, ViewContainer } from "./App.css";
+import "./App.css";
 import { demoData } from "./data/demo_data";
-import { IDB } from "./utils/idb";
+import { idb } from "./utils/mock_idb";
 
+// Categories for the items
 const CATEGORIES = ["Food & Drink", "Groceries", "Shopping", "Transport", "General"];
+// Default view when the app starts
 const DEFAULT_VIEW = "home";
 
 const App = () => {
-  const [currentView, setCurrentView] = useState(DEFAULT_VIEW);
-  const [db, setDb] = useState(null);
-  const [items, setItems] = useState([]);
-  const [currItem, setCurrItem] = useState({});
-  const [modalMsg, setModalMsg] = useState(null);
+  // State hooks for managing different app states
+  const [currentView, setCurrentView] = useState(DEFAULT_VIEW); // Tracks the current view of the app
+  const [db, setDb] = useState(null); // Database state
+  const [items, setItems] = useState([]); // State to hold items data
+  const [currItem, setCurrItem] = useState({}); // State to hold the current item being edited or added
+  const [modalMsg, setModalMsg] = useState(null); // State to handle modal messages
 
-  // Initialize the database
+  // Initialize the IndexedDB when the component mounts
   useEffect(() => {
     const initDB = async () => {
       try {
-        const database = new IDB("myDatabase", "myStore");
-        await database.initDB();
-        setDb(database);
+        const database = await idb.openCostsDB("costsdb", 1) // Open the database
+        setDb(database); // Set the db state once it's open
       } catch (error) {
-        setModalMsg("Error initializing database.");
+        setModalMsg("Error initializing database."); // Show an error message if DB initialization fails
       }
     };
 
     initDB();
 
     return () => {
-      if (db) db.closeDB();
+      if (db) db.closeDB(); // Close DB when the component unmounts
     };
-  }, []);
+  }, []); // Runs only once on mount
 
-  // Load data from the database
+  // Load data from the database once it's initialized
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true; // To avoid setting state after component unmount
 
-    if (db === null) return;
+    if (db === null) return; // Exit if DB is not initialized yet
 
     const loadData = async () => {
       try {
-        const allItems = await db.getAllItems();
+        const allItems = await db.getAllItems(); // Fetch all items from the DB
         if (allItems.length === 0) {
-          await db.loadDemoData(demoData);
-          if (isMounted) setItems(await db.getAllItems());
+          await db.loadDemoData(demoData); // Load demo data if DB is empty
+          if (isMounted) setItems(await db.getAllItems()); // Set items state with demo data
         } else {
-          if (isMounted) setItems(allItems);
+          if (isMounted) setItems(allItems); // Set items state if DB has data
         }
       } catch (error) {
-        setModalMsg("Error loading data.");
+        setModalMsg("Error loading data."); // Show error message if fetching data fails
       }
     };
 
     loadData();
 
     return () => {
-      isMounted = false;
+      isMounted = false; // Clean up on unmount
     };
-  }, [db]);
+  }, [db]); // Runs when db state changes
 
-  // Save or update an item
+  // Save or update an item in the database
   const saveItem = async (item) => {
-    if (!db) return;
+    if (!db) return; // Return if DB is not available
 
     try {
       if (item.id) {
-        await db.editItem(item);
+        await db.editItem(item); // Edit the item if it has an ID
       } else {
-        const newId = await db.addItem(item);
-        item.id = newId;
+        await db.addCost(item); // Add a new item if no ID
       }
-      setItems(await db.getAllItems());
-      setCurrItem({});
-      setCurrentView("dashboard");
+      setItems(await db.getAllItems()); // Reload all items from DB
+      setCurrItem({}); // Reset the current item
+      setCurrentView("dashboard"); // Switch to the dashboard view
     } catch (error) {
-      setModalMsg("Error saving item.");
+      setModalMsg("Error saving item."); // Show error message if saving fails
     }
   };
 
-  // Views configuration
+  // Views configuration mapping the views to components and props
   const VIEW_COMPONENTS = {
     home: {
       label: "Home",
@@ -109,21 +110,22 @@ const App = () => {
     },
   };
 
+  // Determine which view to display based on the current view state
   const CurrentViewComponent = VIEW_COMPONENTS[currentView]?.component || HomeView;
   const currentViewProps = VIEW_COMPONENTS[currentView]?.props || {};
 
   return (
-    <AppContainer>
+    <div className="app-container">
       <Header views={VIEW_COMPONENTS} currentView={currentView} onViewChange={setCurrentView} />
       <Container style={{ marginTop: "20px" }}>
-        <ViewContainer>
+        <div className="view-container">
           <CurrentViewComponent {...currentViewProps} />
-        </ViewContainer>
+        </div>
       </Container>
 
-      {/* modal that will show the user massage */}
+      {/* Modal to show dynamic messages */}
       <Dialog open={Boolean(modalMsg)} onClose={() => setModalMsg(null)}>
-        <DialogTitle>Massage</DialogTitle>
+        <DialogTitle>Message</DialogTitle>
         <DialogContent>
           <p>{modalMsg}</p>
         </DialogContent>
@@ -132,7 +134,7 @@ const App = () => {
         </DialogActions>
       </Dialog>
       
-    </AppContainer>
+    </div>
   );
 };
 

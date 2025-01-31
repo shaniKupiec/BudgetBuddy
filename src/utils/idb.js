@@ -1,29 +1,39 @@
-export class IDB {
+export class idb {
   constructor(dbName, storeName) {
-    this.dbName = dbName; // Name of the database
-    this.storeName = storeName; // Name of the object store
-    this.db = null; // Database instance
+    this.dbName = dbName; // The name of the IndexedDB database
+    this.storeName = storeName; // The name of the object store inside the database
+    this.db = null; // This will store the database connection
+  }
+
+  // Static method to create and open the database with a default store name "costs"
+  static async openCostsDB(dbName, version = 1) {
+    const instance = new idb(dbName, "costs"); // Create a new instance with "costs" as store name
+    await instance.initDB(version); // Initialize the database
+    return instance; // Return the instance with the open database
   }
 
   // Initialize the database
   async initDB(version = 1) {
     try {
       return await new Promise((resolve, reject) => {
-        const request = indexedDB.open(this.dbName, version);
+        const request = indexedDB.open(this.dbName, version); // Open or create the database
 
+        // This event triggers if a new database is created or a version upgrade happens
         request.onupgradeneeded = (event) => {
           const db = event.target.result;
-          // Create the object store if it doesn't exist
+          // Create the object store if it doesn't already exist
           if (!db.objectStoreNames.contains(this.storeName)) {
             db.createObjectStore(this.storeName, { keyPath: "id", autoIncrement: true });
           }
         };
 
+        // If the database opens successfully, store the instance
         request.onsuccess = (event) => {
-          this.db = event.target.result; // Save the database instance
+          this.db = event.target.result;
           resolve(this.db);
         };
 
+        // Handle any errors during the database opening process
         request.onerror = (event) => {
           reject(new Error(`Failed to initialize the database: ${event.target.error}`));
         };
@@ -34,37 +44,37 @@ export class IDB {
     }
   }
 
-  // Get the object store in the specified mode
+  // Helper function to get the object store in a specific mode (readonly or readwrite)
   _getStore(mode) {
     if (!this.db) throw new Error("Database is not initialized");
-    const transaction = this.db.transaction(this.storeName, mode);
-    return transaction.objectStore(this.storeName);
+    const transaction = this.db.transaction(this.storeName, mode); // Create a transaction
+    return transaction.objectStore(this.storeName); // Return the object store
   }
 
-  // Add a new item to the store
-  async addItem(newItem) {
+  // Add a new item to the database
+  async addCost(costItem) { // costItem is without ID
     try {
       return await new Promise((resolve, reject) => {
-        const store = this._getStore("readwrite");
-        const request = store.add(newItem);
+        const store = this._getStore("readwrite"); // Open store in readwrite mode
+        const request = store.add(costItem); // Try adding the item
 
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = (event) => reject(new Error(`Failed to add item: ${event.target.error}`));
+        request.onsuccess = () => resolve(request.result); // Resolve with the new item
+        request.onerror = (event) => reject(new Error(`Failed to add cost: ${event.target.error}`));
       });
     } catch (error) {
-      console.error("Error adding item:", error);
+      console.error("Error adding cost:", error);
       throw error;
     }
   }
 
-  // Retrieve all items from the store
+  // Retrieve all items from the database
   async getAllItems() {
     try {
       return await new Promise((resolve, reject) => {
-        const store = this._getStore("readonly");
-        const request = store.getAll();
+        const store = this._getStore("readonly"); // Open store in readonly mode
+        const request = store.getAll(); // Fetch all records
 
-        request.onsuccess = () => resolve(request.result);
+        request.onsuccess = () => resolve(request.result); // Resolve with all data
         request.onerror = (event) => reject(new Error(`Failed to get all items: ${event.target.error}`));
       });
     } catch (error) {
@@ -73,7 +83,7 @@ export class IDB {
     }
   }
 
-  // Update an existing item in the store
+  // Update an existing item in the database
   async editItem(updatedItem) {
     if (!updatedItem.id) {
       throw new Error("The updated item must include an 'id' field.");
@@ -81,10 +91,10 @@ export class IDB {
 
     try {
       return await new Promise((resolve, reject) => {
-        const store = this._getStore("readwrite");
-        const request = store.put(updatedItem);
+        const store = this._getStore("readwrite"); // Open store in readwrite mode
+        const request = store.put(updatedItem); // Try updating the item
 
-        request.onsuccess = () => resolve(updatedItem);
+        request.onsuccess = () => resolve(updatedItem); // Resolve with updated data
         request.onerror = (event) => reject(new Error(`Failed to update item: ${event.target.error}`));
       });
     } catch (error) {
@@ -97,8 +107,8 @@ export class IDB {
   async deleteItem(id) {
     try {
       return await new Promise((resolve, reject) => {
-        const store = this._getStore("readwrite");
-        const request = store.delete(id);
+        const store = this._getStore("readwrite"); // Open store in readwrite mode
+        const request = store.delete(id); // Try deleting the item
 
         request.onsuccess = () => resolve(`Item with ID ${id} deleted`);
         request.onerror = (event) => reject(new Error(`Failed to delete item with ID ${id}: ${event.target.error}`));
@@ -109,7 +119,7 @@ export class IDB {
     }
   }
 
-  // Load demo data into the store
+  // Load multiple demo data items into the database
   async loadDemoData(items) {
     if (!Array.isArray(items)) {
       throw new Error("Input must be an array of items.");
@@ -117,9 +127,9 @@ export class IDB {
 
     try {
       return await new Promise((resolve, reject) => {
-        const store = this._getStore("readwrite");
+        const store = this._getStore("readwrite"); // Open store in readwrite mode
 
-        // Add each demo item to the store
+        // Process each demo item and insert it
         const promises = items.map((item) => {
           return new Promise((res, rej) => {
             const request = store.add(item);
@@ -139,8 +149,8 @@ export class IDB {
   // Close the database connection
   closeDB() {
     if (this.db) {
-      this.db.close();
-      this.db = null;
+      this.db.close(); // Close the database connection
+      this.db = null; // Reset the database instance
     } else {
       console.warn("No database connection to close.");
     }

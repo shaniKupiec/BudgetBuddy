@@ -1,20 +1,20 @@
 import React from 'react';
-import { HeaderContainer, NavButton } from './Header.css';
+import './Header.css';
 
 const Header = ({ views, currentView, onViewChange }) => {
     return (
-        <HeaderContainer>
-            {/* Map through the views object, creating a NavButton for each entry */}
+        <header className="header-container">
+            {/* Map through the views object, creating a "link" to each view */}
             {Object.entries(views).map(([key, { label }]) => (
-                <NavButton
+                <button className={`header-button ${currentView === key ? 'active' : ''}`}
                     key={key}
-                    isactive={currentView === key} // Highlight the active view
+                    // when clicking on the name of the view, the view will change
                     onClick={() => onViewChange(key)} 
                 >
                     {label}
-                </NavButton>
+                </button>
             ))}
-        </HeaderContainer>
+        </header>
     );
 };
 
