@@ -1,120 +1,126 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
-import {
-    ItemFormContainer,
-    ItemFormInputs,
-    InputRow,
-    Input,
-    Label,
-    DropdownContainer,
-    Dropdown,
-    SelectedCategories,
-} from './ItemFormView.css.js';
+import './ItemFormView.css'; // Import the CSS file
 
-const ItemFormView = ({ categories = [], saveItem = () => {} }) => {
+const ItemFormView = ({ categories = [], saveItem = () => {}, setModalMsg = () => {} }) => {
+    // State hooks to manage form input values
     const [itemName, setItemName] = useState(''); // State for item name
     const [itemCost, setItemCost] = useState(''); // State for item cost
     const [itemDescription, setItemDescription] = useState(''); // State for item description
     const [itemDate, setItemDate] = useState(''); // State for item date
-    const [selectedCategory, setSelectedCategory] = useState(''); // State for a single selected category
+    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
 
+    // Handle form submission
     const handleSubmit = () => {
-        if (!itemName || !itemCost || !itemDescription || !itemDate || !selectedCategory) {
-            alert('Please fill out all fields'); // Alert for missing fields
+        // Validation: Ensure all fields are filled
+        if (itemName === '' || itemCost === '' || itemDescription === '' || itemDate === '' || selectedCategory === '') {
+            setModalMsg('Please fill out all fields.'); // Show error message
             return;
         }
 
+        // Save the item
         saveItem({
             name: itemName,
-            cost: itemCost,
+            cost: parseFloat(itemCost), // Ensure cost is saved as a number
             description: itemDescription,
             date: itemDate,
-            category: selectedCategory, // Save the single selected category
+            category: selectedCategory,
         });
 
-        // Reset the form fields
+        // Reset form fields
         setItemName('');
         setItemCost('');
         setItemDescription('');
         setItemDate('');
         setSelectedCategory('');
-        alert('Item added successfully!');
+        setModalMsg('Item added successfully!'); // Show success message
     };
 
     return (
-        <ItemFormContainer>
+        <div className="item-form-container">
             <h2>Item Form</h2>
-            <ItemFormInputs>
+            {/* Form inputs */}
+            <div className="item-form-inputs">
                 {/* Input for item name */}
-                <InputRow>
-                    <Label htmlFor="name">Name:</Label>
-                    <Input
+                <div className="input-row">
+                    <label htmlFor="name" className="label">Name:</label>
+                    <input
                         type="text"
                         id="name"
+                        className="input"
                         value={itemName}
-                        onChange={(e) => setItemName(e.target.value)}
+                        onChange={(e) => setItemName(e.target.value)} // Update item name state
                         placeholder="Enter item name"
                     />
-                </InputRow>
+                </div>
                 {/* Input for item cost */}
-                <InputRow>
-                    <Label htmlFor="cost">Cost:</Label>
-                    <Input
-                        type="text"
+                <div className="input-row">
+                    <label htmlFor="cost" className="label">Cost:</label>
+                    <input
+                        type="number" // Number input for cost
                         id="cost"
+                        className="input"
                         value={itemCost}
                         onChange={(e) => {
                             const value = e.target.value;
-                            if (!isNaN(value) && Number(value) > 0) {
-                                setItemCost(value); // Only allow positive numbers
+                            // Allow only non-negative numbers
+                            if (!isNaN(value) && parseFloat(value) >= 0) {
+                                setItemCost(value);
+                            } else {
+                                setModalMsg('Cost must be a positive number.');
                             }
                         }}
                         placeholder="Enter item cost"
                     />
-                </InputRow>
+                </div>
                 {/* Input for item description */}
-                <InputRow>
-                    <Label htmlFor="description">Description:</Label>
-                    <Input
+                <div className="input-row">
+                    <label htmlFor="description" className="label">Description:</label>
+                    <input
                         type="text"
                         id="description"
+                        className="input"
                         value={itemDescription}
-                        onChange={(e) => setItemDescription(e.target.value)}
+                        onChange={(e) => setItemDescription(e.target.value)} // Update description state
                         placeholder="Enter item description"
                     />
-                </InputRow>
+                </div>
                 {/* Input for item date */}
-                <InputRow>
-                    <Label htmlFor="date">Date:</Label>
-                    <Input
-                        type="date"
+                <div className="input-row">
+                    <label htmlFor="date" className="label">Date:</label>
+                    <input
+                        type="date" // Date input for selecting a date
                         id="date"
+                        className="input"
                         value={itemDate}
-                        onChange={(e) => setItemDate(e.target.value)}
+                        onChange={(e) => setItemDate(e.target.value)} // Update date state
                     />
-                </InputRow>
-            </ItemFormInputs>
-            {/* Dropdown for single category selection */}
-            <DropdownContainer>
-                <Label htmlFor="category">Category:</Label>
-                <Dropdown
+                </div>
+            </div>
+            {/* Dropdown for category selection */}
+            <div className="dropdown-container">
+                <label htmlFor="category" className="label">Category:</label>
+                <select
                     id="category"
+                    className="dropdown"
                     value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e) => setSelectedCategory(e.target.value)} // Update selected category
                 >
                     <option value="">Select a category</option>
+                    {/* Render categories dynamically */}
                     {categories.map((category, index) => (
                         <option key={index} value={category}>
                             {category}
                         </option>
                     ))}
-                </Dropdown>
+                </select>
+                {/* Show selected category */}
                 {selectedCategory && (
-                    <SelectedCategories>
+                    <div className="selected-categories">
                         Selected Category: {selectedCategory}
-                    </SelectedCategories>
+                    </div>
                 )}
-            </DropdownContainer>
+            </div>
             {/* Submit button */}
             <Button
                 variant="contained"
@@ -124,7 +130,7 @@ const ItemFormView = ({ categories = [], saveItem = () => {} }) => {
             >
                 Add Item
             </Button>
-        </ItemFormContainer>
+        </div>
     );
 };
 

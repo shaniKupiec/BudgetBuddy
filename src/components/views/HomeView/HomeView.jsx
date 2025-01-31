@@ -1,29 +1,23 @@
 import React from 'react';
-import {
-    HomeContainer,
-    Title,
-    Subtitle,
-    Description,
-    ContentWrapper,
-} from './HomeView.css.js';
+import './HomeView.css'; // Import the CSS file
 
 // This component represents the Home page of Budget Buddy
 const HomeView = () => {
     return (
-        <HomeContainer>   
+        <div className="home-container">   
             {/* Wrapper for the content */}
-            <ContentWrapper>
+            <div className="content-wrapper">
                 {/* Main title */}
-                <Title>Welcome to Budget Buddy!</Title>
+                <h1 className="title">Welcome to Budget Buddy!</h1>
                 {/* Subtitle */}
-                <Subtitle>Manage your finances effortlessly with Budget Buddy</Subtitle>
+                <h2 className="subtitle">Manage your finances effortlessly with Budget Buddy</h2>
                 {/* Description */}
-                <Description>
+                <p className="description">
                     Add your expenses, generate detailed reports, and gain insights into your spending habits. 
                     Take control of your budget and plan for a smarter financial future!
-                </Description>
-            </ContentWrapper>
-        </HomeContainer>
+                </p>
+            </div>
+        </div>
     );
 };
 
