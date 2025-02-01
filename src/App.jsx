@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
-import {
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import HomeView from "./components/views/HomeView/HomeView";
-import DashboardView from "./components/views/DashboardView/DashboardView";
 import ItemFormView from "./components/views/ItemFormView/ItemFormView";
+import DashboardView from "./components/views/DashboardView/DashboardView";
 import "./App.css";
 import { demoData } from "./data/demo_data";
-import { idb } from "./utils/mock_idb";
+import { idb } from "./utils/idb";
 
 // Categories for the items
-const CATEGORIES = ["Food & Drink", "Groceries", "Shopping", "Transport", "General"];
+const CATEGORIES = ["Food & Drink", "Groceries", "Insurance", "Shopping", "Transport", "Travel ", "Education", "Childcare", "General"]; 
 // Default view when the app starts
 const DEFAULT_VIEW = "home";
 
@@ -32,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const initDB = async () => {
       try {
-        const database = await idb.openCostsDB("costsdb", 1) // Open the database
+        const database = await idb.openCostsDB("costsdb", 1); // Open the database
         setDb(database); // Set the db state once it's open
       } catch (error) {
         setModalMsg("Error initializing database."); // Show an error message if DB initialization fails
@@ -117,10 +110,8 @@ const App = () => {
   return (
     <div className="app-container">
       <Header views={VIEW_COMPONENTS} currentView={currentView} onViewChange={setCurrentView} />
-      <Container style={{ marginTop: "20px" }}>
-        <div className="view-container">
-          <CurrentViewComponent {...currentViewProps} />
-        </div>
+      <Container className="view-container">
+        <CurrentViewComponent {...currentViewProps} />
       </Container>
 
       {/* Modal to show dynamic messages */}
@@ -130,13 +121,13 @@ const App = () => {
           <p>{modalMsg}</p>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setModalMsg(null)} color="primary">Close</Button>
+          <Button onClick={() => setModalMsg(null)} color="primary">
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
-      
     </div>
   );
 };
-
 
 export default App;
