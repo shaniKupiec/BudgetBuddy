@@ -73,7 +73,7 @@ const BudgetPieChart = ({ items }) => {
     color: pastelColors[index % pastelColors.length], // Cycle through pastel colors
   }));
 
-  return <PieChart series={[{ data }]} width={500} height={800} />;
+  return <PieChart series={[{ data }]} width={700} height={400} />;
 };
 
 const DashboardView = ({ items }) => {
