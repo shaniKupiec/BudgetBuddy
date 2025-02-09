@@ -11,7 +11,6 @@ const ItemFormView = ({ item, categories, saveItem, setModalMsg }) => {
   const [itemDate, setItemDate] = useState(defaultDate); // State for item date
   const [selectedCategory, setSelectedCategory] = useState(item?.category || ""); // State for selected category
 
-  // console.log('selectedCategory',selectedCategory)
   // Handle form submission
   const handleSubmit = () => {
     // Validation: Ensure all fields are filled

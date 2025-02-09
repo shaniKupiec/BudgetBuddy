@@ -66,6 +66,7 @@ const App = () => {
     };
   }, [db]); // Runs when db state changes
 
+  // when user clicks on a view in the header
   const handleViewChange = (key) => {
     setCurrItem(null);
     setCurrentView(key)
@@ -97,7 +98,7 @@ const App = () => {
     setCurrentView("itemForm");
   };
 
-  // Handle delete item
+  // Handle delete item in the database
   const deleteItem = async (itemId) => {
     if (!db) return; // Return if DB is not available
 
