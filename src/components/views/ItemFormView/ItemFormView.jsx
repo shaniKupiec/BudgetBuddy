@@ -20,11 +20,11 @@ const ItemFormView = ({ categories = [], saveItem = () => {}, setModalMsg = () =
 
         // Save the item
         saveItem({
-            name: itemName,
             cost: parseFloat(itemCost), // Ensure cost is saved as a number
-            description: itemDescription,
-            date: itemDate,
+            name: itemName,
             category: selectedCategory,
+            description: itemDescription,
+            time: new Date(itemDate).getTime(),
         });
 
         // Reset form fields

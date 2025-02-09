@@ -1,0 +1,24 @@
+.dashboard-container {
+    display: grid;
+    grid-template-rows: 80px 1fr;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+    grid-template-areas: 
+            "form form"
+            "table pie"
+}
+.form-container {
+    grid-area: form;
+}
+.form-container .MuiFormControl-root{
+    padding-top: 10px
+}
+.form-container .MuiFormControl-root:first-of-type{
+    margin-right: 15px
+}
+.table-container {
+    grid-area: table;
+}
+.pie-container {
+    grid-area: pie;
+}
