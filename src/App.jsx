@@ -9,7 +9,7 @@ import { demoData } from "./data/demo_data";
 import { idb } from "./utils/idb";
 
 // Categories for the items
-const CATEGORIES = ["Food & Drink", "Groceries", "Insurance", "Shopping", "Transport", "Travel ", "Education", "Childcare", "General"]; 
+const CATEGORIES = ["Food & Drink", "Groceries", "Insurance", "Shopping", "Transport", "Travel ", "Education", "Childcare", "General"];
 // Default view when the app starts
 const DEFAULT_VIEW = "home";
 
@@ -18,7 +18,7 @@ const App = () => {
   const [currentView, setCurrentView] = useState(DEFAULT_VIEW); // Tracks the current view of the app
   const [db, setDb] = useState(null); // Database state
   const [items, setItems] = useState([]); // State to hold items data
-  const [currItem, setCurrItem] = useState({}); // State to hold the current item being edited or added
+  const [currItem, setCurrItem] = useState(null); // State to hold the current item being edited or added
   const [modalMsg, setModalMsg] = useState(null); // State to handle modal messages
 
   // Initialize the IndexedDB when the component mounts
@@ -66,21 +66,47 @@ const App = () => {
     };
   }, [db]); // Runs when db state changes
 
-  // Save or update an item in the database
+  const handleViewChange = (key) => {
+    setCurrItem(null);
+    setCurrentView(key)
+  };
+
+  // Add or update an item in the database
   const saveItem = async (item) => {
     if (!db) return; // Return if DB is not available
 
     try {
       if (item.id) {
         await db.editItem(item); // Edit the item if it has an ID
+        setModalMsg("Item edited successfully!"); // Show success message
       } else {
         await db.addCost(item); // Add a new item if no ID
+        setModalMsg("Item added successfully!"); // Show success message
       }
       setItems(await db.getAllItems()); // Reload all items from DB
-      setCurrItem({}); // Reset the current item
+      setCurrItem(null); // Reset the current item
       setCurrentView("dashboard"); // Switch to the dashboard view
     } catch (error) {
       setModalMsg("Error saving item."); // Show error message if saving fails
+    }
+  };
+
+  // Handle edit item - change view and set current item
+  const handleEditItem = (item) => {
+    setCurrItem(item);
+    setCurrentView("itemForm");
+  };
+
+  // Handle delete item
+  const deleteItem = async (itemId) => {
+    if (!db) return; // Return if DB is not available
+
+    try {
+      await db.deleteItem(itemId); // Delete the item sent as param
+      setItems(await db.getAllItems()); // Reload all items from DB
+      setModalMsg("Item deleted successfully");
+    } catch (error) {
+      setModalMsg("Error deleting item."); // Show error message if saving fails
     }
   };
 
@@ -99,7 +125,7 @@ const App = () => {
     dashboard: {
       label: "Dashboard",
       component: DashboardView,
-      props: { items: items },
+      props: { items, deleteItem, handleEditItem },
     },
   };
 
@@ -109,7 +135,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Header views={VIEW_COMPONENTS} currentView={currentView} onViewChange={setCurrentView} />
+      <Header views={VIEW_COMPONENTS} currentView={currentView} handleViewChange={handleViewChange} />
       <Container className="view-container">
         <CurrentViewComponent {...currentViewProps} />
       </Container>
