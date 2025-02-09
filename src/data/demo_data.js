@@ -2,7 +2,7 @@ export const demoData = [
   // 2023
   // January
   {
-    cost: 45,
+    cost: 350,
     name: "Grocery Shopping",
     category: "Groceries",
     description: "Bought vegetables, fruits, and dairy",
@@ -16,7 +16,7 @@ export const demoData = [
     time: new Date("2023-01-15").getTime(),
   },
   {
-    cost: 60,
+    cost: 400,
     name: "Winter Clothes",
     category: "Shopping",
     description: "Sweater and gloves",
@@ -25,21 +25,21 @@ export const demoData = [
 
   // February
   {
-    cost: 80,
+    cost: 1000,
     name: "Weekend Getaway",
     category: "Travel",
     description: "Short trip to the mountains",
     time: new Date("2023-02-05").getTime(),
   },
   {
-    cost: 30,
+    cost: 250,
     name: "Dinner at Italian Restaurant",
     category: "Food & Drink",
     description: "Pizza and pasta",
     time: new Date("2023-02-14").getTime(),
   },
   {
-    cost: 20,
+    cost: 150,
     name: "Gym Membership",
     category: "General",
     description: "Monthly gym subscription",
@@ -48,7 +48,7 @@ export const demoData = [
 
   // March
   {
-    cost: 90,
+    cost: 900,
     name: "Car Insurance",
     category: "Insurance",
     description: "Quarterly car insurance payment",
@@ -62,7 +62,7 @@ export const demoData = [
     time: new Date("2023-03-12").getTime(),
   },
   {
-    cost: 50,
+    cost: 150,
     name: "Shoes Purchase",
     category: "Shopping",
     description: "New running shoes",
@@ -71,21 +71,21 @@ export const demoData = [
 
   // May
   {
-    cost: 35,
+    cost: 350,
     name: "Dinner at Steakhouse",
     category: "Food & Drink",
     description: "T-bone steak and fries",
     time: new Date("2023-05-07").getTime(),
   },
   {
-    cost: 55,
+    cost: 2000,
     name: "Flight Ticket",
     category: "Travel",
     description: "Domestic flight ticket",
     time: new Date("2023-05-18").getTime(),
   },
   {
-    cost: 25,
+    cost: 500,
     name: "Kids' School Supplies",
     category: "Childcare",
     description: "Notebooks and stationery",
@@ -94,21 +94,21 @@ export const demoData = [
 
   // June
   {
-    cost: 50,
+    cost: 200,
     name: "Summer Clothes",
     category: "Shopping",
     description: "T-shirts and shorts",
     time: new Date("2023-06-03").getTime(),
   },
   {
-    cost: 100,
+    cost: 150,
     name: "Health Insurance",
     category: "Insurance",
     description: "Monthly health insurance fee",
     time: new Date("2023-06-10").getTime(),
   },
   {
-    cost: 20,
+    cost: 50,
     name: "Taxi Ride",
     category: "Transport",
     description: "Late-night taxi fare",
@@ -117,7 +117,7 @@ export const demoData = [
 
   // August
   {
-    cost: 60,
+    cost: 200,
     name: "Beach Resort Stay",
     category: "Travel",
     description: "Weekend at the beach",
@@ -131,7 +131,7 @@ export const demoData = [
     time: new Date("2023-08-21").getTime(),
   },
   {
-    cost: 40,
+    cost: 400,
     name: "Groceries Shopping",
     category: "Groceries",
     description: "Weekly grocery supplies",
@@ -140,7 +140,7 @@ export const demoData = [
 
   // September
   {
-    cost: 75,
+    cost: 150,
     name: "Back-to-School Supplies",
     category: "Childcare",
     description: "Backpack and books for kids",
@@ -154,7 +154,7 @@ export const demoData = [
     time: new Date("2023-09-15").getTime(),
   },
   {
-    cost: 15,
+    cost: 35,
     name: "Coffee & Snacks",
     category: "Food & Drink",
     description: "Coffee and pastries with friends",
@@ -163,21 +163,21 @@ export const demoData = [
 
   // November
   {
-    cost: 90,
+    cost: 175,
     name: "Winter Jacket",
     category: "Shopping",
     description: "Warm waterproof winter jacket",
     time: new Date("2023-11-08").getTime(),
   },
   {
-    cost: 65,
+    cost: 900,
     name: "Car Insurance Renewal",
     category: "Insurance",
     description: "Annual insurance renewal",
     time: new Date("2023-11-16").getTime(),
   },
   {
-    cost: 35,
+    cost: 850,
     name: "Thanksgiving Dinner",
     category: "Food & Drink",
     description: "Turkey and sides for family gathering",
@@ -187,21 +187,21 @@ export const demoData = [
   //2024
   // February
   {
-    cost: 32,
+    cost: 415,
     name: "Valentine’s Dinner",
     category: "Food & Drink",
     description: "Romantic dinner at a steakhouse",
     time: new Date("2024-02-14").getTime(),
   },
   {
-    cost: 90,
+    cost: 900,
     name: "Annual Car Insurance",
     category: "Insurance",
     description: "Full-year car insurance payment",
     time: new Date("2024-02-20").getTime(),
   },
   {
-    cost: 45,
+    cost: 800,
     name: "Grocery Shopping",
     category: "Groceries",
     description: "Weekly food and essentials",
@@ -210,14 +210,14 @@ export const demoData = [
 
   // April
   {
-    cost: 120,
+    cost: 2500,
     name: "Spring Weekend Trip",
     category: "Travel",
     description: "3-day trip to the countryside",
     time: new Date("2024-04-05").getTime(),
   },
   {
-    cost: 28,
+    cost: 50,
     name: "Book Purchase",
     category: "Education",
     description: "Programming and self-improvement books",
@@ -240,14 +240,14 @@ export const demoData = [
     time: new Date("2024-05-12").getTime(),
   },
   {
-    cost: 40,
+    cost: 85,
     name: "Concert Ticket",
     category: "Entertainment",
     description: "Live music event",
     time: new Date("2024-05-18").getTime(),
   },
   {
-    cost: 18,
+    cost: 75,
     name: "Lunch Out",
     category: "Food & Drink",
     description: "Casual lunch with friends",
@@ -263,14 +263,14 @@ export const demoData = [
     time: new Date("2024-07-03").getTime(),
   },
   {
-    cost: 50,
+    cost: 330,
     name: "New Sneakers",
     category: "Shopping",
     description: "Running shoes for workouts",
     time: new Date("2024-07-10").getTime(),
   },
   {
-    cost: 35,
+    cost: 675,
     name: "Groceries",
     category: "Groceries",
     description: "Vegetables, fruits, and dairy",
@@ -279,7 +279,7 @@ export const demoData = [
 
   // August
   {
-    cost: 95,
+    cost: 140,
     name: "Back-to-School Supplies",
     category: "Childcare",
     description: "Backpack, notebooks, and pens",
@@ -293,7 +293,7 @@ export const demoData = [
     time: new Date("2024-08-20").getTime(),
   },
   {
-    cost: 15,
+    cost: 45,
     name: "Coffee and Snacks",
     category: "Food & Drink",
     description: "Afternoon coffee with pastries",
@@ -302,14 +302,14 @@ export const demoData = [
 
   // October
   {
-    cost: 45,
+    cost: 125,
     name: "Halloween Costume",
     category: "Shopping",
     description: "Spooky outfit for a party",
     time: new Date("2024-10-25").getTime(),
   },
   {
-    cost: 80,
+    cost: 625,
     name: "Winter Tires",
     category: "Transport",
     description: "New tires for the car",
@@ -332,14 +332,14 @@ export const demoData = [
     time: new Date("2024-11-29").getTime(),
   },
   {
-    cost: 60,
+    cost: 600,
     name: "Thanksgiving Dinner",
     category: "Food & Drink",
     description: "Turkey and side dishes",
     time: new Date("2024-11-24").getTime(),
   },
   {
-    cost: 25,
+    cost: 150,
     name: "Monthly Gym Membership",
     category: "General",
     description: "Regular fitness club access",
@@ -355,14 +355,14 @@ export const demoData = [
     time: new Date("2024-12-20").getTime(),
   },
   {
-    cost: 55,
+    cost: 550,
     name: "New Year’s Eve Dinner",
     category: "Food & Drink",
     description: "Fancy restaurant celebration",
     time: new Date("2024-12-31").getTime(),
   },
   {
-    cost: 65,
+    cost: 650,
     name: "Ski Resort Trip",
     category: "Travel",
     description: "Weekend ski adventure",
@@ -371,7 +371,7 @@ export const demoData = [
   //2025
   // January
   {
-    cost: 50,
+    cost: 165,
     name: "New Year Brunch",
     category: "Food & Drink",
     description: "Celebratory meal to start the year",
@@ -385,7 +385,7 @@ export const demoData = [
     time: new Date("2025-01-05").getTime(),
   },
   {
-    cost: 40,
+    cost: 400,
     name: "Winter Clothing",
     category: "Shopping",
     description: "Sweater and gloves for cold weather",
