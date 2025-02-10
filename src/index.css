@@ -10,8 +10,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* transform: scale(0.7); */
 }
 
 #root {
@@ -26,9 +24,4 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-
-  /* transform: scale(0.6);
-  transform-origin: top left;
-  width: 166.67%;
-  height: 166.67%; */
 }
