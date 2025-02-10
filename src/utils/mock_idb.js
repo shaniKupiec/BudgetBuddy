@@ -1,4 +1,4 @@
-export class idb {
+class idb {
   // Constructor: Sets up the database with name, store name, and some basic data storage
   constructor(dbName, storeName) {
     this.dbName = dbName;
