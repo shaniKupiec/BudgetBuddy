@@ -16,13 +16,7 @@
 }
 
 @media (min-width: 1200px) {
-  .css-5c1adp-MuiContainer-root {
+  .MuiContainer-root {
     max-width: none !important /* Cancels any max-width set previously */
-  }
-}
-
-@media (max-width: 768px) {
-  .view-container {
-      padding: 12px;
   }
 }

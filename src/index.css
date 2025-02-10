@@ -27,8 +27,8 @@ body {
   place-items: center;
   min-width: 320px;
 
-  transform: scale(0.6);
+  /* transform: scale(0.6);
   transform-origin: top left;
   width: 166.67%;
-  height: 166.67%;
+  height: 166.67%; */
 }
